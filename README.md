@@ -4,7 +4,9 @@
 ![GitHub Logo](https://github.com/maz3dp/GRBL-SUKA-V3/blob/master/Suka_v3_pin.jpg?raw=true)
 ***
 
- * Mini Laser engraver
- * STM32F103 based Board
+ * Mini Laser engraver firmware.
+ * Support Board: STM32F103 based Board.
+ * Base Source : GRBL 1.1 (https://github.com/gnea/grbl)
+ * Recommended Software: LaserGRBL v2.8.50 (http://lasergrbl.com/en/)
  
 
