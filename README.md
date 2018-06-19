@@ -1,4 +1,4 @@
-### GRBL for SUKA V3
+### GRBL upgrade for K3 Mini CNC Laser Engraving Machine.
 
 ***
 ![GitHub Logo](https://github.com/maz3dp/GRBL-SUKA-V3/blob/master/Suka_v3_pin.jpg?raw=true)
