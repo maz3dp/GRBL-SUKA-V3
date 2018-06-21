@@ -15,7 +15,6 @@ uint8_t LASER_State = 0;
 
 // EEPROM /////////////////////////////////////////////////////////////////////
 
-
 void eeprom_init()
 {
 #if USE_EEPROM    
@@ -217,68 +216,78 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
 }
 
-void step_x(unsigned char val) 
+void step_x(uint8_t val) 
 {
+    static uint8_t oldval = 0;
     if (val==0)
     {
         HAL_GPIO_WritePin(X_PORT, INA1_X_Pin|INB1_X_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(X_PORT, INA2_X_Pin|INB2_X_Pin, GPIO_PIN_RESET);
-        SEQ_X = (SEQ_X + ((DIR_X) ? 3 : 1)) % 4;
     }
     else
     {
-        switch(SEQ_X)
+        if (oldval == 0)
         {
-        case 0:
-            HAL_GPIO_WritePin(X_PORT, INA1_X_Pin, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(X_PORT, INB1_X_Pin, GPIO_PIN_SET);
-            break;
-        case 1:
-            HAL_GPIO_WritePin(X_PORT, INA2_X_Pin, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(X_PORT, INB2_X_Pin, GPIO_PIN_SET);
-            break;
-        case 2:
-            HAL_GPIO_WritePin(X_PORT, INA1_X_Pin, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(X_PORT, INB1_X_Pin, GPIO_PIN_RESET);
-            break;
-        case 3:
-            HAL_GPIO_WritePin(X_PORT, INA2_X_Pin, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(X_PORT, INB2_X_Pin, GPIO_PIN_RESET);
-            break;
+            SEQ_X = (SEQ_X + ((DIR_X) ? 3 : 1)) % 4;
+            switch(SEQ_X)
+            {
+            case 0:
+                HAL_GPIO_WritePin(X_PORT, INA1_X_Pin, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(X_PORT, INB1_X_Pin, GPIO_PIN_SET);
+                break;
+            case 1:
+                HAL_GPIO_WritePin(X_PORT, INA2_X_Pin, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(X_PORT, INB2_X_Pin, GPIO_PIN_SET);
+                break;
+            case 2:
+                HAL_GPIO_WritePin(X_PORT, INA1_X_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(X_PORT, INB1_X_Pin, GPIO_PIN_RESET);
+                break;
+            case 3:
+                HAL_GPIO_WritePin(X_PORT, INA2_X_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(X_PORT, INB2_X_Pin, GPIO_PIN_RESET);
+                break;
+            }
         }
     }
+    oldval = val;
 }
 
-void step_y(unsigned char val)
+void step_y(uint8_t val)
 {
+    static uint8_t oldval = 0;
     if (val==0)
     {
         HAL_GPIO_WritePin(Y_PORT, INA2_Y_Pin|INB2_Y_Pin, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(Y_PORT, INA1_Y_Pin|INB1_Y_Pin, GPIO_PIN_RESET);
-        SEQ_Y = (SEQ_Y + ((DIR_Y) ? 1 : 3)) % 4;
     }
     else
     {
-        switch(SEQ_Y)
+        if (oldval == 0)
         {
-        case 0:
-            HAL_GPIO_WritePin(Y_PORT, INA2_Y_Pin, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(Y_PORT, INB2_Y_Pin, GPIO_PIN_RESET);
-            break;
-        case 1:
-            HAL_GPIO_WritePin(Y_PORT, INA1_Y_Pin, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(Y_PORT, INB1_Y_Pin, GPIO_PIN_RESET);
-            break;
-        case 2:
-            HAL_GPIO_WritePin(Y_PORT, INA2_Y_Pin, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(Y_PORT, INB2_Y_Pin, GPIO_PIN_SET);
-            break;
-        case 3:
-            HAL_GPIO_WritePin(Y_PORT, INA1_Y_Pin, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(Y_PORT, INB1_Y_Pin, GPIO_PIN_SET);
-            break;
-        }        
+            SEQ_Y = (SEQ_Y + ((DIR_Y) ? 1 : 3)) % 4;
+            switch(SEQ_Y)
+            {
+            case 0:
+                HAL_GPIO_WritePin(Y_PORT, INA2_Y_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(Y_PORT, INB2_Y_Pin, GPIO_PIN_RESET);
+                break;
+            case 1:
+                HAL_GPIO_WritePin(Y_PORT, INA1_Y_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(Y_PORT, INB1_Y_Pin, GPIO_PIN_RESET);
+                break;
+            case 2:
+                HAL_GPIO_WritePin(Y_PORT, INA2_Y_Pin, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(Y_PORT, INB2_Y_Pin, GPIO_PIN_SET);
+                break;
+            case 3:
+                HAL_GPIO_WritePin(Y_PORT, INA1_Y_Pin, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(Y_PORT, INB1_Y_Pin, GPIO_PIN_SET);
+                break;
+            }        
+        }
     }
+    oldval = val;
 }
 
 void process_step()
