@@ -8,6 +8,6 @@
  * Support Board: STM32F103 based Board.
  * Base Source : GRBL 1.1 (https://github.com/gnea/grbl)
  * Recommended Software: LaserGRBL v2.8.50 (http://lasergrbl.com/en/)
+ * To download firmware, Serial Wire Debug (SWD) Debugger is required. Download via SWDIO / SWCLK pin.
  * Youtube (https://youtu.be/sue73sFdNok)
  
-
